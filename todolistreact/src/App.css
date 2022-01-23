@@ -1,0 +1,18 @@
+.todo {
+  display: flex;
+  flex-direction: column;
+  border-style: groove;
+  width: 40%;
+  margin-left: 30%;
+  margin-top: 2%;
+   
+}
+
+.container {
+  border-style: groove;
+}
+
+#root {
+  
+  
+}
