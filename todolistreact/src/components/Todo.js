@@ -3,7 +3,12 @@ import * as Icon from 'react-bootstrap-icons';
 function Todo({todo,status,deleteTodo}) {
    let css = {fontStyle: "italic"} 
 
-  return <div className="container">
+   let styling = {background:"white"}
+   if (todo.checked===true){
+     styling ={background: "rgb(174, 251, 174)"}
+   }
+
+  return <div className="container"  style={styling}>
         <h2>{todo.name}
         
             <button className="btn btn" onClick={()=>{
@@ -12,7 +17,7 @@ function Todo({todo,status,deleteTodo}) {
                 }}>
 
                 {todo.checked===false ? <Icon.Circle></Icon.Circle> : <Icon.CheckCircleFill></Icon.CheckCircleFill>}            
-                
+               
             </button>
             
             <button className="btn btn " onClick={()=>{deleteTodo(todo.name)}}>

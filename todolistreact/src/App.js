@@ -54,6 +54,7 @@ function App() {
 
   const deleteTodo= (name) =>{
    
+    if(window.confirm("You sure you want to delete this task?")===false) return
     const remove = todos.filter((todo)=>{
       if (todo.name!==name)
       return todo
