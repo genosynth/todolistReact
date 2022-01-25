@@ -1,4 +1,4 @@
-import React, { useState , useRef }from 'react'
+import React, { useState , useRef, useEffect }from 'react'
 import './App.css';
 import TodoList from './components/TodoList';
 import AddToDo from './components/AddToDo';
@@ -18,11 +18,20 @@ return {name,notes,checked, dateAdded}
 
 function App() {
 
+  
   let obj1= toDoObject("Gym","Arms & Abs",false)
   let obj2= toDoObject("Coding","React",false)
-  const [todos, setTodos] = useState([obj1,obj2])
+  
+  const [todos, setTodos] = useState(()=> {
+    const localData = localStorage.getItem("todos");
+    return localData ? JSON.parse(localData) : [];
+  });
+  
+  useEffect(()=> {
+    localStorage.setItem("todos", JSON.stringify(todos))
+  }, [todos]);
 
-  function setStatus(id) {
+  function setStatus(id) { // used to change check from true to false or vice versa
     const changeStatus = todos.filter((todo) =>{
       //return todo.checked=true;
       if (todo.checked===false){
@@ -39,15 +48,25 @@ function App() {
     const name = nameRef
     const notes = notesRef
     if (name ==="") return
-   setTodos(prevTodos => [...prevTodos, toDoObject(name,notes,false)])
-
+   setTodos(prevTodos => [...prevTodos, toDoObject(name,notes,false)]) 
    
+  }
+
+  const deleteTodo= (name) =>{
+   
+    const remove = todos.filter((todo)=>{
+      if (todo.name!==name)
+      return todo
+    })
+    //console.log(name)
+    setTodos(remove)
+
   }
 
   return (
     <div>
-
-      <TodoList todos={todos} status={setStatus}></TodoList>
+      <Header></Header>
+      <TodoList todos={todos} status={setStatus} deleteTodo={deleteTodo}></TodoList>
       <AddToDo add={addTodo}></AddToDo>
      
  

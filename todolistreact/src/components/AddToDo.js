@@ -10,7 +10,7 @@ function AddToDo({add}) {
   return <div className="todo">
     <input ref={nameRef} type="text" placeholder="Enter task name"></input>
     <input ref ={notesRef} type="text" placeholder="Enter notes or describtion"></input>
-    <button className="btn btn btn-primary" onClick={()=>{
+    <button className="btn btn btn-success" onClick={()=>{
        const name = nameRef.current.value 
        const notes =notesRef.current.value
       add(name,notes)

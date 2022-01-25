@@ -1,20 +1,26 @@
 import * as Icon from 'react-bootstrap-icons';
 
-function Todo({todo,status}) {
+function Todo({todo,status,deleteTodo}) {
+   let css = {fontStyle: "italic"} 
+
   return <div className="container">
         <h2>{todo.name}
         
-        <button className="btn btn " onClick={()=>{
-            status(todo.name)
-            console.log(todo.checked)}}>
-            <Icon.Circle></Icon.Circle>
-        </button>
-        
-        <button className="btn btn ">
-                <Icon.Trash></Icon.Trash></button>
-            </h2>
+            <button className="btn btn" onClick={()=>{
+                status(todo.name)
+                //console.log(todo.checked)
+                }}>
+
+                {todo.checked===false ? <Icon.Circle></Icon.Circle> : <Icon.CheckCircleFill></Icon.CheckCircleFill>}            
+                
+            </button>
+            
+            <button className="btn btn " onClick={()=>{deleteTodo(todo.name)}}>
+                    <Icon.Trash></Icon.Trash>
+            </button>
+        </h2>
         <span>{todo.notes}</span>  
-        <span> - Date Added - {todo.dateAdded}</span>
+        <span style={css}> - Date Added - {todo.dateAdded}</span>
     </div>
  
 }
