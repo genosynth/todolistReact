@@ -20,6 +20,7 @@ function Todo({todo,status,deleteTodo}) {
                
             </button>
             
+
             <button className="btn btn " onClick={()=>{deleteTodo(todo.name)}}>
                     <Icon.Trash></Icon.Trash>
             </button>

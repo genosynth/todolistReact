@@ -31,6 +31,7 @@ function App() {
     localStorage.setItem("todos", JSON.stringify(todos))
   }, [todos]);
 
+  
   function setStatus(id) { // used to change check from true to false or vice versa
     const changeStatus = todos.filter((todo) =>{
       //return todo.checked=true;
@@ -52,7 +53,7 @@ function App() {
    
   }
 
-  const deleteTodo= (name) =>{
+  const deleteTodo = (name) =>{
    
     if(window.confirm("You sure you want to delete this task?")===false) return
     const remove = todos.filter((todo)=>{
@@ -64,10 +65,11 @@ function App() {
 
   }
 
+
   return (
     <div>
       <Header></Header>
-      <TodoList todos={todos} status={setStatus} deleteTodo={deleteTodo}></TodoList>
+      <TodoList  todos={todos} status={setStatus} deleteTodo={deleteTodo}></TodoList>
       <AddToDo add={addTodo}></AddToDo>
      
  
