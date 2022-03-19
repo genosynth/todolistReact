@@ -1,7 +1,7 @@
 import Todo from './Todo'
 import * as Icon from 'react-bootstrap-icons';
 
-function TodoList({todos , status, deleteTodo}) {
+function TodoList({todos , status, deleteTodo, editTodo, applyTodo}) {
 
   if(todos.length===0){    
     return <div className='empty'>
@@ -14,7 +14,7 @@ function TodoList({todos , status, deleteTodo}) {
    
      todos.map(todo => {
 
-            return <Todo key={todo.name} todo={todo} status={status} deleteTodo={deleteTodo}/>                      
+            return <Todo key={todo.name} todo={todo} status={status} deleteTodo={deleteTodo} editTodo={editTodo} applyTodo={applyTodo}/>                      
 
         })    
   )
