@@ -37,13 +37,26 @@ function Todo({todo,status,deleteTodo, editTodo, applyTodo}) {
                     let notes =notesRef.current.value
                     if (name===""){name=todo.name}
                     if (notes===""){notes=todo.notes}
-                    applyTodo(name,notes, todo.name)
+
+                    let dateEdited = new Date();
+                    let hour = dateEdited.getHours();
+                    let minutes = dateEdited.getMinutes(); 
+              
+                    if (minutes<10){minutes="0"+minutes}           
+
+                    let dd = String(dateEdited.getDate()).padStart(2, '0');
+                    let mm = String(dateEdited.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    let yyyy = dateEdited.getFullYear();
+                    dateEdited = dd + '/' + mm + '/' + yyyy + ' - ' + hour + ":" + minutes;
+
+                    applyTodo(name,notes, todo.name, dateEdited)
                     }}>
                         <Icon.ExplicitFill></Icon.ExplicitFill>
                 </button>
            </h2>
            <input placeholder={todo.notes} ref={notesRef} ></input>
            <span style={css}> - Date Added - {todo.dateAdded}</span>
+           <span style={css}> {todo.editHistory[todo.editHistory.length-1]}</span>
        </div>
    }
 
@@ -70,6 +83,8 @@ function Todo({todo,status,deleteTodo, editTodo, applyTodo}) {
         </h2>
         <span>{todo.notes}</span>  
         <span style={css}> - Date Added - {todo.dateAdded}</span>
+        <span style={css}> {todo.editHistory[todo.editHistory.length-1]}</span>
+        
     </div>
  
 }

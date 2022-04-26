@@ -1,4 +1,4 @@
-import React, { useState , useRef, useEffect }from 'react'
+import React, { useState ,useEffect }from 'react'
 import './App.css';
 import TodoList from './components/TodoList';
 import AddToDo from './components/AddToDo';
@@ -6,21 +6,18 @@ import Header from './components/Header'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function toDoObject(name,notes,checked=false, edit=false){ //Class of todo Object
+function toDoObject(name,notes,checked=false, edit=false, editHistory=[]){ //Class of todo Object
   let dateAdded = new Date();
   let dd = String(dateAdded.getDate()).padStart(2, '0');
   let mm = String(dateAdded.getMonth() + 1).padStart(2, '0'); //January is 0!
   let yyyy = dateAdded.getFullYear();
   dateAdded = dd + '/' + mm + '/' + yyyy;
 
-return {name,notes,checked, dateAdded, edit}
+return {name,notes,checked, dateAdded, edit, editHistory}
 }
 
-function App() {
+function App() {  
 
-  
-  let obj1= toDoObject("Gym","Arms & Abs",false)
-  let obj2= toDoObject("Coding","React",false)
   
   const [todos, setTodos] = useState(()=> {
     const localData = localStorage.getItem("todos");
@@ -56,7 +53,7 @@ function App() {
 
     if (checkSameName.length>0){return window.alert("Task with same name already exists!")}
    
-   setTodos(prevTodos => [...prevTodos, toDoObject(name,notes,false)]) 
+   setTodos(prevTodos => [...prevTodos, toDoObject(name,notes)]) 
    
   }
 
@@ -81,13 +78,16 @@ function App() {
     setTodos(edit)
   }
 
-  const applyTodo = (name,notes, oldName) => {
+  const applyTodo = (name,notes, oldName, dateEdited) => {
 
     for (let i=0; i<todos.length; i++){
       if (todos[i].name===name){ 
         const toExit =todos.filter((todo) => {
-          if(todo.name===oldName){todo.edit=false 
-            todo.notes=notes}
+          if(todo.name===oldName){
+            todo.edit=false 
+            if(todo.notes!==notes){ todo.editHistory.push(" - Edited On " + dateEdited)} 
+            todo.notes=notes
+          }
           return todo
         })
 
@@ -95,11 +95,14 @@ function App() {
         return window.alert("It appears that you already have a task with the same name!")
       }
     }
+
     const apply = todos.filter((todo) =>{
       if (todo.name===oldName){
         todo.name=name
         todo.notes=notes
         todo.edit=false
+        todo.editHistory.push(" - Edited On " + dateEdited)
+        //console.log(todo)
       }
       return todo
     })
